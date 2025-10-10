@@ -18,6 +18,7 @@
 
   /* Neutral grays */
   --color-gray: #5B6871;
+  --color-light-gray: #F6F8F9;
 }
 
 @layer base {

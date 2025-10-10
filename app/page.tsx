@@ -2,41 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
+import { useLogin } from "@/hooks/useLogin";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
+
+  const { mutate: login, isPending, isError, error } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setIsLoading(true);
-
-    try {
-      // TODO: Replace with actual API call
-      console.log("Login attempt:", formData);
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // On success, redirect to dashboard
-      router.push("/dashboard");
-    } catch (err) {
-      setError("Invalid email or password");
-    } finally {
-      setIsLoading(false);
-    }
+    login(formData);
   };
 
   return (
@@ -77,6 +60,7 @@ export default function LoginPage() {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 required
+                disabled={isPending}
               />
 
               <div>
@@ -91,13 +75,15 @@ export default function LoginPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 pr-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     required
+                    disabled={isPending}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    disabled={isPending}
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5" />
@@ -108,9 +94,9 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {error && (
-                <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
-                  {error}
+              {isError && (
+                <div className="rounded-lg bg-error-bg p-3 text-sm text-error">
+                  {error?.message || "Invalid email or password"}
                 </div>
               )}
 
@@ -118,9 +104,9 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full"
                 size="lg"
-                disabled={isLoading}
+                disabled={isPending}
               >
-                {isLoading ? "Logging in..." : "Login"}
+                {isPending ? "Logging in..." : "Login"}
               </Button>
             </form>
 
@@ -128,7 +114,7 @@ export default function LoginPage() {
               Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
-                className="font-medium text-blue-600 hover:text-blue-700"
+                className="font-medium text-primary hover:text-primary-hover"
               >
                 Sign up
               </Link>

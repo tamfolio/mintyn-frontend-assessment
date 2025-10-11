@@ -1,3 +1,4 @@
+/* stylelint-disable */
 @import "tailwindcss";
 
 @theme {
@@ -47,3 +48,5 @@
     @apply bg-gray-400;
   }
 }
+
+/* stylelint-enable */

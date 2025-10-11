@@ -19,6 +19,8 @@
   /* Neutral grays */
   --color-gray: #5B6871;
   --color-light-gray: #F6F8F9;
+  --color-border-gray: #DDE2E4;
+  --color-border-gray2: #E5E9EB;
 }
 
 @layer base {

@@ -13,7 +13,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [router]);
 
-  // Show nothing while checking auth
   if (!isAuthenticated()) {
     return null;
   }

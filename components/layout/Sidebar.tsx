@@ -34,7 +34,7 @@ export default function Sidebar() {
         <nav className="flex-1 space-y-1 border-r border-gray-200 px-3 py-4">
           {navigation.map((item, index) => {
             const isActive = pathname === item.href;
-            const showDivider = index === 1; // After Transactions (index 1)
+            const showDivider = index === 1; 
             
             return (
               <div key={item.name}>

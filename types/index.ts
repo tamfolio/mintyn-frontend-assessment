@@ -1,4 +1,4 @@
-// Authentication types
+
 export interface LoginCredentials {
     email: string;
     password: string;
@@ -11,7 +11,6 @@ export interface LoginCredentials {
     avatar?: string;
   }
   
-  // Transaction types
   export type TransactionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
   
   export interface Transaction {
@@ -19,11 +18,32 @@ export interface LoginCredentials {
     payerName: string;
     date: string;
     amount: number;
+    currency?: string;
     status: TransactionStatus;
   }
   
-  // Metrics types
-  export interface DashboardMetrics {
+  export interface ApiTransaction {
+    player_name: string;
+    date: string;
+    amount: number;
+    currency: string;
+    status: string; 
+  }
+  
+  export interface DashboardStats {
     salesValue: number;
     commissionsEarned: number;
+    currency?: string;
+  }
+  
+  export interface ApiDashboardStats {
+    sales_value: number;
+    commission_earned: number;
+    currency: string;
+  }
+  
+  export interface ApiResponse<T> {
+    data: T;
+    message: string;
+    error: string | null;
   }

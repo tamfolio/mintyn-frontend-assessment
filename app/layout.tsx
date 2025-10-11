@@ -6,7 +6,7 @@ import QueryProvider from '@/providers/QueryProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'My Next.js App',
+  title: 'Spring',
   description: 'Built with Next.js, TypeScript, React Query, and Tailwind',
 };
 

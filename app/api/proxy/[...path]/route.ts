@@ -9,7 +9,7 @@ export async function GET(
   const path = params.path.join('/');
   const token = request.headers.get('authorization');
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
 
@@ -26,6 +26,7 @@ export async function GET(
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
+    console.error('GET request failed:', error);
     return NextResponse.json(
       { error: 'Failed to fetch data' },
       { status: 500 }
@@ -41,7 +42,7 @@ export async function POST(
   const body = await request.json();
   const token = request.headers.get('authorization');
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
 
@@ -59,6 +60,7 @@ export async function POST(
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
+    console.error('POST request failed:', error);
     return NextResponse.json(
       { error: 'Failed to post data' },
       { status: 500 }

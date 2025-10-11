@@ -8,7 +8,7 @@ interface MetricCardProps {
   icon: React.ReactNode;
 }
 
-export default function MetricCard({ title, value, icon }: MetricCardProps) {
+export default function MetricCard({ title, value }: MetricCardProps) {
   return (
     <Card className="p-6">
       <div className="flex flex-col items-start gap-6">

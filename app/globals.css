@@ -2,23 +2,15 @@
 @import "tailwindcss";
 
 @theme {
-  /* Primary Blue - Main brand color */
   --color-primary: #0E73F6;
   --color-primary-hover: #0c5fc7;
-  --color-primary-light: #D7EDFF;
-
-
-  /* Status colors for badges */
+  --color-primary-light: #D7EDFF;  
   --color-success: #1FC16B;
   --color-success-bg: #E0FAEC;
-  
   --color-warning: #FA7319;
   --color-warning-bg: #FFF3EB;
-  
   --color-error: #ef4444;
   --color-error-bg: #fee2e2;
-
-  /* Neutral grays */
   --color-gray: #5B6871;
   --color-light-gray: #F6F8F9;
   --color-border-gray: #DDE2E4;

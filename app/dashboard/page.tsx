@@ -1,14 +1,18 @@
-'use client';
+"use client";
 
-import { DollarSign, TrendingUp, ChevronRight } from 'lucide-react';
-import Link from 'next/link';
-import MetricCard from '@/components/dashboard/MetricsCard';
-import TransactionTable from '@/components/dashboard/TransactionTable';
-import { useDashboardStats, useDashboardTransactions } from '@/hooks/useDashboard';
+import { DollarSign, TrendingUp, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import MetricCard from "@/components/dashboard/MetricsCard";
+import TransactionTable from "@/components/dashboard/TransactionTable";
+import {
+  useDashboardStats,
+  useDashboardTransactions,
+} from "@/hooks/useDashboard";
 
 export default function DashboardHomePage() {
   const { data: stats, isLoading: statsLoading } = useDashboardStats();
-  const { data: transactions, isLoading: transactionsLoading } = useDashboardTransactions();
+  const { data: transactions, isLoading: transactionsLoading } =
+    useDashboardTransactions();
 
   return (
     <div className="space-y-6 bg-white">
@@ -21,11 +25,14 @@ export default function DashboardHomePage() {
             <option>Weekly</option>
             <option>Monthly</option>
           </select>
-          <button className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:border-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary">
-            <span>Aug 15, 2025</span>
-            <span>-</span>
-            <span>Aug 15, 2025</span>
-          </button>
+          <div className="flex">
+            <button className="flex items-center gap-2 rounded-bl-lg rounded-tl-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 hover:border-gray-400 ">
+              <span>Aug 15, 2025</span>
+            </button>
+            <button className="flex items-center gap-2 rounded-br-lg rounded-tr-lg border  border-gray-300 px-4 py-2 text-sm text-gray-600 hover:border-gray-400 ">
+              <span>Aug 15, 2025</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -71,16 +78,18 @@ export default function DashboardHomePage() {
       {/* Transaction History */}
       <div className="space-y-4 rounded-xl border border-border-gray2 px-6 py-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-900">Transaction History</h2>
+          <h2 className="text-lg font-semibold text-gray-900">
+            Transaction History
+          </h2>
           <Link
             href="/dashboard/transactions"
-            className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 border p-1 border-border-gray rounded-sm"
+            className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 border py-1 px-2 border-border-gray rounded-sm"
           >
             See all
             <ChevronRight className="h-4 w-4" />
           </Link>
         </div>
-        
+
         {transactionsLoading ? (
           <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
             <div className="animate-pulse">

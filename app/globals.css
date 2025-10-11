@@ -4,14 +4,15 @@
   /* Primary Blue - Main brand color */
   --color-primary: #0E73F6;
   --color-primary-hover: #0c5fc7;
-  --color-primary-light: #e6f2ff;
+  --color-primary-light: #D7EDFF;
+
 
   /* Status colors for badges */
-  --color-success: #10b981;
-  --color-success-bg: #d1fae5;
+  --color-success: #1FC16B;
+  --color-success-bg: #E0FAEC;
   
-  --color-warning: #f97316;
-  --color-warning-bg: #ffedd5;
+  --color-warning: #FA7319;
+  --color-warning-bg: #FFF3EB;
   
   --color-error: #ef4444;
   --color-error-bg: #fee2e2;

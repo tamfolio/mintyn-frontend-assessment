@@ -53,10 +53,10 @@ export default function TransactionTable({ transactions }: TransactionTableProps
   );
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div className="overflow-hidden rounded-xl border-b border-gray-200 bg-white">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="border-b border-gray-200 bg-gray-50">
+          <thead className="border-b border-gray-200 bg-white">
             <tr>
               <th className="px-6 py-3 text-left">
                 <SortButton field="payerName">Payer Name</SortButton>

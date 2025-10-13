@@ -10,10 +10,8 @@ export class ApiError extends Error {
 }
 
 async function handleResponse<T>(response: Response): Promise<T> {
-  const data = await response.json();
-  
-  // Check if the response is not ok OR if there's an error in the data
-  if (!response.ok || data.error) {
+  // Check if response is ok first, BEFORE trying to parse JSON
+  if (!response.ok) {
     // Handle 401 Unauthorized - token expired or invalid
     if (response.status === 401) {
       removeToken();
@@ -22,13 +20,36 @@ async function handleResponse<T>(response: Response): Promise<T> {
       }
     }
     
-    throw new ApiError(
-      response.status, 
-      data.error || data.message || response.statusText
-    );
+    // Try to get error message, but handle cases where response is empty
+    let errorMessage = response.statusText || 'Request failed';
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorData.message || errorMessage;
+    } catch {
+      // If JSON parsing fails, use the status text
+      console.error('Failed to parse error response as JSON');
+    }
+    
+    throw new ApiError(response.status, errorMessage);
   }
-  
-  return data;
+
+  // Only parse JSON if response is ok
+  try {
+    const data = await response.json();
+    
+    // Check if there's an error in the data
+    if (data.error) {
+      throw new ApiError(response.status, data.error);
+    }
+    
+    return data;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    // Handle JSON parsing errors
+    throw new ApiError(response.status, 'Invalid JSON response');
+  }
 }
 
 // Token management functions

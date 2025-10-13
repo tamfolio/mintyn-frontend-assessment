@@ -1,26 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 const API_BASE_URL = 'https://mint-frontend-test.onrender.com/api/v1';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
-  const { path: pathArray } = await params;
-  const path = pathArray.join('/');
-  const body = await request.json();
-  const token = request.headers.get('authorization');
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers['Authorization'] = token;
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    const response = await fetch(`${API_BASE_URL}/${path}`, {
+    const body = await request.json();
+    const authHeader = request.headers.get('authorization');
+
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers,
       body: JSON.stringify(body),
@@ -29,42 +25,9 @@ export async function POST(
     const data = await response.json();
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error('POST request failed:', error);
+    console.error('Login Error:', error);
     return NextResponse.json(
-      { error: 'Failed to post data' },
-      { status: 500 }
-    );
-  }
-}
-
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
-  const { path: pathArray } = await params;
-  const path = pathArray.join('/');
-  const token = request.headers.get('authorization');
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers['Authorization'] = token;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/${path}`, {
-      method: 'GET',
-      headers,
-    });
-
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
-  } catch (error) {
-    console.error('GET request failed:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch data' },
+      { error: 'Login failed', details: String(error) },
       { status: 500 }
     );
   }

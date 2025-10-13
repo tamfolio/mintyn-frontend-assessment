@@ -4,9 +4,10 @@ const API_BASE_URL = 'https://mint-frontend-test.onrender.com/api/v1';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
-  const path = params.path.join('/');
+  const { path: pathArray } = await params;
+  const path = pathArray.join('/');
   const token = request.headers.get('authorization');
 
   const headers: Record<string, string> = {
@@ -36,9 +37,10 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
-  const path = params.path.join('/');
+  const { path: pathArray } = await params;
+  const path = pathArray.join('/');
   const body = await request.json();
   const token = request.headers.get('authorization');
 
